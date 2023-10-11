@@ -210,8 +210,29 @@ Changelog is rather internal in nature. See release notes for the public overvie
   - **Breaking:** no
   - **Impacts a11y:** no
   - **Guidance:** -
+## Develop (to become version 1.5.x)
+- [#426] - Adds `'click'` event to `KTabsList`
+- [#425] - Adds `pinned` and `notPinned` icons. Updates `cloud` icon to outline
+- [#424] - Adds `laptop` `cloud `and `wifi` icons to KDS
+- [#351] - Wrap `KCheckbox` default slot's content in <label>
+- [#355] - Add `KSelect` to KDS
+- [#346] - `KDropdownMenu` no longer contains a button. Relatedly, all props that relate to buttons were removed from `KDropdownMenu`, namely `text`, `appearance`, `disabled`. Therefore, when migrating to this version, `KDropdownMenu` needs to be wrapped in `KButton` or `KIconButton`'s' `menu` slot and these obsolete props moved to button components from `KDropdownMenu`.
+- [#346] - `KDropdownMenu` has a new prop `hasIcons` (whether or not the options display an icon). 
+- [#346] - `KButton`: The default slot doesn't take precedence over `text` prop anymore (the default slot content will be rendered above `text` if provided).
+- [#361] - `KButton` exposes `hasDropdown` prop which will show the dropdown icon in a button.
+- [#361] - Fixes 'Property or method "disabled" is not defined on the instance but referenced during render.' raised by `KDropdownMenu`
+- [#377] - Implement `useKResponsiveWindow` composable.
+- [#380] - Wrap `KRadioButton` text.
+- [#384] - Add `KDateRange` to KDS
+- [#403] - Add `KOptionalText` to KDS
+- [#420] - Add `KTabs`, `KTabsList`, and `KTabsPanel`
+- [#420] - Fix randomly missing focus ring
+- [#427] - Update `KDateRange` to use `vue-intl` function `$formatDate` for date formatting and translations
+- [#433] - Add new `props` to `KCircularLoader`:  `minVisibleTime` and `show`
+- [#465] - Add `containFocus` `prop` to `KDropdownMenu`. Add `#option` slot to `KDropdownMenu`. Add `v-bind="$attrs"` to `KIconButton`.
 
 [#433]: https://github.com/learningequality/kolibri-design-system/pull/433
+[#465]: https://github.com/learningequality/kolibri-design-system/pull/465
 
 - [#429]
   - **Description:** Allows `KSelect` to extend outside of `KModal`
