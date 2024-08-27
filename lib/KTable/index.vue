@@ -254,6 +254,7 @@
         };
       },
     },
+
     methods: {
       /**
        * Takes care of
@@ -274,135 +275,41 @@
 
         switch (key) {
           case 'ArrowUp':
-            if (rowIndex === -1) {
-              nextRowIndex = totalRows - 1;
-            } else {
-              nextRowIndex = rowIndex - 1;
-            }
+            [nextRowIndex, nextColIndex] = this.handleArrowUp(rowIndex, colIndex, totalRows);
             break;
           case 'ArrowDown':
-            if (rowIndex === -1) {
-              nextRowIndex = 0;
-            } else if (rowIndex === totalRows - 1) {
-              nextRowIndex = -1;
-            } else {
-              nextRowIndex = (rowIndex + 1) % totalRows;
-            }
+            [nextRowIndex, nextColIndex] = this.handleArrowDown(rowIndex, colIndex, totalRows);
             break;
           case 'ArrowLeft':
-            if (rowIndex === -1) {
-              if (colIndex > 0) {
-                nextColIndex = colIndex - 1;
-              } else {
-                nextColIndex = totalCols - 1;
-                nextRowIndex = totalRows - 1;
-              }
-            } else if (colIndex > 0) {
-              nextColIndex = colIndex - 1;
-            } else {
-              nextColIndex = totalCols - 1;
-              nextRowIndex = rowIndex > 0 ? rowIndex - 1 : -1;
-            }
+            [nextRowIndex, nextColIndex] = this.handleArrowLeft(
+              rowIndex,
+              colIndex,
+              totalRows,
+              totalCols
+            );
             break;
           case 'ArrowRight':
-            if (colIndex === totalCols - 1) {
-              if (rowIndex === totalRows - 1) {
-                nextColIndex = 0;
-                nextRowIndex = -1;
-              } else {
-                nextColIndex = 0;
-                nextRowIndex = rowIndex + 1;
-              }
-            } else {
-              nextColIndex = colIndex + 1;
-            }
+            [nextRowIndex, nextColIndex] = this.handleArrowRight(
+              rowIndex,
+              colIndex,
+              totalRows,
+              totalCols
+            );
             break;
           case 'Enter':
             if (rowIndex === -1 && this.sortable) {
               this.handleSort(colIndex);
             }
             break;
-          case 'Tab': {
-            // Identify all focusable elements inside the current cell
-            const currentCell = this.getCell(rowIndex, colIndex);
-
-            // Collect focusable elements using native DOM methods
-            const focusableElements = [];
-
-            if (currentCell) {
-              const buttons = currentCell.getElementsByTagName('button');
-              const links = currentCell.getElementsByTagName('a');
-              const inputs = currentCell.getElementsByTagName('input');
-              const selects = currentCell.getElementsByTagName('select');
-              const textareas = currentCell.getElementsByTagName('textarea');
-
-              focusableElements.push(...buttons, ...links, ...inputs, ...selects, ...textareas);
-            }
-
-            const focusedElementIndex = focusableElements.indexOf(document.activeElement);
-            if (focusableElements.length > 0) {
-              if (!event.shiftKey) {
-                // if navigating between more focusable elements within the cell
-                if (focusedElementIndex < focusableElements.length - 1) {
-                  focusableElements[focusedElementIndex + 1].focus();
-                  event.preventDefault();
-                  return;
-                } else {
-                  if (colIndex < totalCols - 1) {
-                    nextColIndex = colIndex + 1;
-                  } else if (rowIndex < totalRows - 1) {
-                    nextColIndex = 0;
-                    nextRowIndex = rowIndex + 1;
-                  } else {
-                    // Allow default behavior when reaching the last cell
-                    return;
-                  }
-                }
-              } else {
-                if (focusedElementIndex < focusableElements.length - 1) {
-                  // if navigating between more focusable elements within the cell
-                  focusableElements[focusedElementIndex + 1].focus();
-                  event.preventDefault();
-                  return;
-                } else {
-                  if (colIndex > 0) {
-                    nextColIndex = colIndex - 1;
-                  } else if (rowIndex > 0) {
-                    nextColIndex = totalCols - 1;
-                    nextRowIndex = rowIndex - 1;
-                  } else {
-                    // Allow default behavior when reaching the first cell
-                    return;
-                  }
-                }
-              }
-            } else {
-              if (!event.shiftKey) {
-                if (colIndex < totalCols - 1) {
-                  nextColIndex = colIndex + 1;
-                } else if (rowIndex < totalRows - 1) {
-                  nextColIndex = 0;
-                  nextRowIndex = rowIndex + 1;
-                } else {
-                  // Allow default behavior when reaching the last cell
-                  return;
-                }
-              } else {
-                if (colIndex > 0) {
-                  nextColIndex = colIndex - 1;
-                } else if (rowIndex > 0) {
-                  nextColIndex = totalCols - 1;
-                  nextRowIndex = rowIndex - 1;
-                } else {
-                  // Allow default behavior when reaching the first cell
-                  return;
-                }
-              }
-            }
-
+          case 'Tab':
+            [nextRowIndex, nextColIndex] = this.handleTab(
+              event,
+              rowIndex,
+              colIndex,
+              totalRows,
+              totalCols
+            );
             break;
-          }
-
           default:
             return;
         }
@@ -414,6 +321,134 @@
         this.highlightHeader(nextColIndex);
 
         event.preventDefault();
+      },
+      handleArrowUp(rowIndex, colIndex, totalRows) {
+        let nextRowIndex = rowIndex;
+        if (rowIndex === -1) {
+          nextRowIndex = totalRows - 1;
+        } else {
+          nextRowIndex = rowIndex - 1;
+        }
+        return [nextRowIndex, colIndex];
+      },
+      handleArrowDown(rowIndex, colIndex, totalRows) {
+        let nextRowIndex = rowIndex;
+        if (rowIndex === -1) {
+          nextRowIndex = 0;
+        } else if (rowIndex === totalRows - 1) {
+          nextRowIndex = -1;
+        } else {
+          nextRowIndex = (rowIndex + 1) % totalRows;
+        }
+        return [nextRowIndex, colIndex];
+      },
+      handleArrowLeft(rowIndex, colIndex, totalRows, totalCols) {
+        let nextRowIndex = rowIndex;
+        let nextColIndex = colIndex;
+        if (rowIndex === -1) {
+          if (colIndex > 0) {
+            nextColIndex = colIndex - 1;
+          } else {
+            nextColIndex = totalCols - 1;
+            nextRowIndex = totalRows - 1;
+          }
+        } else if (colIndex > 0) {
+          nextColIndex = colIndex - 1;
+        } else {
+          nextColIndex = totalCols - 1;
+          nextRowIndex = rowIndex > 0 ? rowIndex - 1 : -1;
+        }
+        return [nextRowIndex, nextColIndex];
+      },
+      handleArrowRight(rowIndex, colIndex, totalRows, totalCols) {
+        let nextRowIndex = rowIndex;
+        let nextColIndex = colIndex;
+        if (colIndex === totalCols - 1) {
+          if (rowIndex === totalRows - 1) {
+            nextColIndex = 0;
+            nextRowIndex = -1;
+          } else {
+            nextColIndex = 0;
+            nextRowIndex = rowIndex + 1;
+          }
+        } else {
+          nextColIndex = colIndex + 1;
+        }
+        return [nextRowIndex, nextColIndex];
+      },
+      handleTab(event, rowIndex, colIndex, totalRows, totalCols) {
+        let nextRowIndex = rowIndex;
+        let nextColIndex = colIndex;
+        const currentCell = this.getCell(rowIndex, colIndex);
+        const focusableElements = [];
+
+        if (currentCell) {
+          const buttons = currentCell.getElementsByTagName('button');
+          const links = currentCell.getElementsByTagName('a');
+          const inputs = currentCell.getElementsByTagName('input');
+          const selects = currentCell.getElementsByTagName('select');
+          const textareas = currentCell.getElementsByTagName('textarea');
+
+          focusableElements.push(...buttons, ...links, ...inputs, ...selects, ...textareas);
+        }
+        console.log('Current cell:', currentCell);
+        console.log('Focusable elements:', focusableElements);
+        const focusedElementIndex = focusableElements.indexOf(document.activeElement);
+        if (focusableElements.length > 0) {
+          if (!event.shiftKey) {
+            if (focusedElementIndex < focusableElements.length - 1) {
+              focusableElements[focusedElementIndex + 1].focus();
+              event.preventDefault();
+              return [rowIndex, colIndex];
+            } else {
+              if (colIndex < totalCols - 1) {
+                nextColIndex = colIndex + 1;
+              } else if (rowIndex < totalRows - 1) {
+                nextColIndex = 0;
+                nextRowIndex = rowIndex + 1;
+              } else {
+                return [rowIndex, colIndex];
+              }
+            }
+          } else {
+            if (focusedElementIndex < focusableElements.length - 1) {
+              focusableElements[focusedElementIndex + 1].focus();
+              event.preventDefault();
+              return [rowIndex, colIndex];
+            } else {
+              if (colIndex > 0) {
+                nextColIndex = colIndex - 1;
+              } else if (rowIndex > 0) {
+                nextColIndex = totalCols - 1;
+                nextRowIndex = rowIndex - 1;
+              } else {
+                return [rowIndex, colIndex]; // Allow default tab behavior when reaching the last cell
+              }
+            }
+          }
+        } else {
+          if (!event.shiftKey) {
+            if (colIndex < totalCols - 1) {
+              nextColIndex = colIndex + 1;
+            } else if (rowIndex < totalRows - 1) {
+              nextColIndex = 0;
+              nextRowIndex = rowIndex + 1;
+            } else {
+              return [rowIndex, colIndex];
+            }
+          } else {
+            if (colIndex > 0) {
+              nextColIndex = colIndex - 1;
+            } else if (rowIndex > 0) {
+              nextColIndex = totalCols - 1;
+              nextRowIndex = rowIndex - 1;
+            } else {
+              return [rowIndex, colIndex];
+            }
+          }
+        }
+
+        return [nextRowIndex, nextColIndex];
       },
       getCell(rowIndex, colIndex) {
         if (rowIndex === -1) {
