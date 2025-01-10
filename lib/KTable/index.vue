@@ -165,52 +165,43 @@
       const headers = ref(props.headers);
       const rows = ref(props.rows);
       const disableBuiltinSorting = ref(props.disableBuiltinSorting);
-      const sortKey = ref(null);
-      const sortOrder = ref(null);
-
 
       const defaultSort = ref({
         index: props.headers.findIndex(h => h.columnId === props.defaultSort.columnId),
         direction: props.defaultSort.direction,
       });
 
-      const { sortedRows, handleSort, getAriaSort } = useSorting(
-        headers,
-        rows,
-        defaultSort,
-        disableBuiltinSorting,
-        emit
-      );
+      const {
+        sortKey,
+        sortOrder,
+        sortedRows,
+        handleSort: localHandleSort,
+        getAriaSort,
+      } = useSorting(headers, rows, defaultSort, disableBuiltinSorting);
+
       const isTableEmpty = computed(() => sortedRows.value.length === 0);
 
       watch(
         () => props.rows,
         newRows => {
           rows.value = newRows;
-        }
+        },
       );
 
-      watch(
-        () => sortKey.value,
-        newSortKey => {
-          if (disableBuiltinSorting.value) {
-            console.log(`Received new sortKey: ${newSortKey}`);
-            sortKey.value = newSortKey;
-          }
+      const handleSort = index => {
+        if (headers.value[index].dataType === DATA_TYPE_OTHERS || !props.sortable) {
+          return;
         }
-      );
+        localHandleSort(index)
+        if (props.disableBuiltinSorting) {
+          // Emit the event to the parent to notify that the sorting has been requested
+          console.log('Emitting changeSort event with sortKey and sortOrder', index, sortOrder.value);
+          emit('changeSort', { sortKey: index, sortOrder: sortOrder.value });
 
-      watch(
-        () => sortOrder.value,
-        newSortOrder => {
-          if (disableBuiltinSorting.value) {
-            console.log(`Received new sortOrder: ${newSortOrder}`);
-            sortOrder.value = newSortOrder;
-          }
         }
-      );
+      };
 
-     
+
       const getHeaderStyle = header => {
         const style = {};
         if (header.minWidth) style.minWidth = header.minWidth;
@@ -380,12 +371,6 @@
       },
     },
     watch: {
-      sortOrder(newVal) {
-        console.log(`sortOrder updated in KTable: ${newVal}`);
-      },
-      sortKey(newVal) {
-        console.log(`sortKey updated in KTable: ${newVal}`);
-      },
       // Use a watcher on props to perform validation on props.
       // This is required as we need access to multiple props simultaneously in some validations.
       $props: {
