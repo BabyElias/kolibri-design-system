@@ -7,6 +7,97 @@ Changelog is rather internal in nature. See release notes for the public overvie
 <!-- [DO NOT REMOVE-USED BY GH ACTION] PASTE CHANGELOG -->
 
 
+- [#923]
+  - **Description:** Fixes glob query in extrac api script.
+  - **Products impact:** bugfix.
+  - **Addresses:** -.
+  - **Components:** Docs.
+  - **Breaking:** no
+  - **Impacts a11y:** no
+  - **Guidance:** .
+
+[#923]: https://github.com/learningequality/kolibri-design-system/pull/923
+
+
+
+- [#922]
+  - **Description:** Fixes playground path in dev docs and gitignore
+  - **Products impact:** internal docs.
+  - **Addresses:** -.
+  - **Components:** -.
+  - **Breaking:** -
+  - **Impacts a11y:** -
+  - **Guidance:** -.
+
+[#922]: https://github.com/learningequality/kolibri-design-system/pull/922
+
+
+
+- [#873]
+  - **Description:**  Implemented `DocsExample` component with toggle functionality for switching between an example and its code snippet in the KDS documentation.
+  - **Products impact:** none
+  - **Addresses:** https://github.com/learningequality/kolibri-design-system/issues/826
+  - **Components:** -
+  - **Breaking:** no
+  - **Impacts a11y:** no
+  - **Guidance:** -
+
+[#873]: https://github.com/learningequality/kolibri-design-system/pull/873
+
+
+
+- [#916]
+  - **Description:** Fixes the no usable sandbox error observed in visual test workflow after merging of visual testing PR.
+  - **Products impact:** bugfix
+  - **Addresses:** -
+  - **Components:** -
+  - **Breaking:** -
+  - **Impacts a11y:** -
+  - **Guidance:** -
+
+[#916]: https://github.com/learningequality/kolibri-design-system/pull/916
+
+
+
+- [#901]
+  - **Description:** Integrates visual testing setup to KDS.
+  - **Products impact:** -
+  - **Addresses:** -
+  - **Components:** -
+  - **Breaking:** -
+  - **Impacts a11y:** -
+  - **Guidance:** -
+
+[#901]: https://github.com/learningequality/kolibri-design-system/pull/901
+
+
+
+- [#804]
+  - **Description:** Refactored `handleKeydown` method into smaller, modular methods for handling different key events. Ensured that the `Tab` key mimics the functionality of the `ArrowRight` key, and the `Shift+Tab` key mimics the functionality of the `ArrowLeft` key. \
+  - **Products impact:** none
+  - **Addresses:** #795
+  - **Components:** `KTable `
+  - **Breaking:** no
+  - **Impacts a11y:** yes
+  - **Guidance:** No special guidance required for consumers.
+
+[#804]: https://github.com/learningequality/kolibri-design-system/pull/804
+
+
+
+- [#870]
+  - **Description:** remove text truncation for the download button
+  - **Products impact:** Choose from - none
+  - **Addresses:** https://github.com/learningequality/kolibri/issues/5557
+  - **Components:** KDropdownMenu,UiMenu
+  - **Breaking:** no
+  - **Impacts a11y:** yes
+  - **Guidance:** -
+
+[#870]: https://github.com/learningequality/kolibri-design-system/pull/870
+
+
+
 - [#907]
   - **Description:** Skip sync projects job if the owner is not LearningEquality
   - **Products impact:**  -.
