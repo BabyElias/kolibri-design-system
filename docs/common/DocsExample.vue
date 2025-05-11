@@ -60,14 +60,14 @@
         v-if="show(exampleId, !isLoaded, MINIMUM_LOADER_TIME)"
         key="loader"
       />
-      <div
+      <DocsShow
         v-else
-        key="loaded-component"
+        :block="block"
       >
         <slot>
           <component :is="loadedComponent" />
         </slot>
-      </div>
+      </DocsShow>
     </KTransition>
   </div>
 
@@ -100,6 +100,9 @@
         type: String,
         required: false,
         default: null,
+        validator(value) {
+          return value === null || value.endsWith('.vue');
+        },
       },
       /**
        * Unique identifier for the example. Needs to be be unique in regards
@@ -111,6 +114,14 @@
       exampleId: {
         type: String,
         required: true,
+      },
+      /*
+       * Flag to determine if the component should take up full width
+       */
+      block: {
+        type: Boolean,
+        default: false,
+        required: false,
       },
     },
     data() {
