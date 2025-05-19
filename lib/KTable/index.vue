@@ -192,15 +192,11 @@
         if (headers.value[index].dataType === DATA_TYPE_OTHERS || !props.sortable) {
           return;
         }
-        localHandleSort(index)
+        localHandleSort(index);
         if (props.disableBuiltinSorting) {
-          // Emit the event to the parent to notify that the sorting has been requested
-          console.log('Emitting changeSort event with sortKey and sortOrder', index, sortOrder.value);
           emit('changeSort', { sortKey: index, sortOrder: sortOrder.value });
-
         }
       };
-
 
       const getHeaderStyle = header => {
         const style = {};
@@ -744,11 +740,9 @@
     cursor: pointer;
   }
 
-
   .empty-message {
     margin-top: 16px;
     margin-bottom: 16px;
   }
 
 </style>
-
