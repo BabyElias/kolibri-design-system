@@ -7,6 +7,84 @@ Changelog is rather internal in nature. See release notes for the public overvie
 <!-- [DO NOT REMOVE-USED BY GH ACTION] PASTE CHANGELOG -->
 
 
+- [#1027]
+  - **Description:** Adds truncateOptionsLabel prop to control wether to truncate or wrap KSelect options label when it overflows.
+  - **Products impact:** new API.
+  - **Addresses:** https://github.com/learningequality/kolibri/issues/12166.
+  - **Components:** KSelect.
+  - **Breaking:** no
+  - **Impacts a11y:** no
+  - **Guidance:** .
+
+[#1027]: https://github.com/learningequality/kolibri-design-system/pull/1027
+
+
+
+- [#1021]
+  - **Description:** This PR changes allows individual documentation tabs (template, script, and style) to be hidden using their respective boolean props.
+  - **Products impact:** None
+  - **Addresses:** https://github.com/learningequality/kolibri-design-system/issues/995
+  - **Components:** KCard, DocsExample
+  - **Breaking:** No
+  - **Impacts a11y:**  No
+  - **Guidance:** None
+
+[#1021]: https://github.com/learningequality/kolibri-design-system/pull/1021
+
+
+
+- [#990]
+  - **Description:** Adds KCardGrid management for reserving space for selection control width in KCard to align cards that already selection controls and the ones who doesnt.
+  - **Products impact:** bugfix.
+  - **Addresses:** https://github.com/learningequality/kolibri-design-system/issues/980.
+  - **Components:** KCard
+  - **Breaking:** no
+  - **Impacts a11y:** no
+  - **Guidance:** .
+
+[#990]: https://github.com/learningequality/kolibri-design-system/pull/990
+
+
+
+- [#1023]
+  - **Description:** Adds a `min-width: 0` to k card area to prevent text overflow issues within KCards with checkboxes.
+  - **Products impact:** bugfix.
+  - **Addresses:** https://github.com/learningequality/kolibri-design-system/issues/958.
+  - **Components:**  KCard.
+  - **Breaking:** no
+  - **Impacts a11y:** no
+  - **Guidance:** -.
+
+[#1023]: https://github.com/learningequality/kolibri-design-system/pull/1023
+
+
+
+- [#1016]
+  - **Description:** Adds clarifications regarding registering KDS components in `visual.load-test-components.js` to the visual testing development docs.
+  - **Products impact:** none.
+  - **Addresses:** -.
+  - **Components:** -.
+  - **Breaking:** no.
+  - **Impacts a11y:** no.
+  - **Guidance:** -.
+
+[#1016]: https://github.com/learningequality/kolibri-design-system/pull/1016
+
+
+
+- [#1026]
+  - **Description:** Wraps ResizeObserver callback in `useKResponsiveElement` with requestAnimationFrame to avoid possible resize observer issues.
+  - **Products impact:** none.
+  - **Addresses:** https://github.com/learningequality/kolibri-design-system/issues/960.
+  - **Components:** -.
+  - **Breaking:** no
+  - **Impacts a11y:** no
+  - **Guidance:** .
+
+[#1026]: https://github.com/learningequality/kolibri-design-system/pull/1026
+
+
+
 - [#1017]
   - **Description:** added visual tests for the KCheckbox component and the KCheckbox component file has been renamed from KCheckbox.vue to KCheckbox/index.vue to better organize the component structure.
   - **Products impact:** none
