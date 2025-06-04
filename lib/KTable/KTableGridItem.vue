@@ -2,7 +2,7 @@
 
   <td
     :class="$computedClass(coreOutlineFocus)"
-    :style="{ textAlign: textAlign, minWidth: minWidth, width: width }"
+    :style="tdStyle"
     tabindex="0"
     data-focus="true"
     role="gridcell"
@@ -57,6 +57,14 @@
           },
         };
       },
+      tdStyle() {
+        return {
+          textAlign: this.textAlign,
+          minWidth: this.minWidth,
+          width: this.width,
+          borderBottom: `1px solid ${this.$themeTokens.fineLine}`,
+        };
+      },
     },
     methods: {
       onKeydown(event) {
@@ -83,6 +91,10 @@
   .cell-content {
     word-break: break-word;
     white-space: normal;
+  }
+
+  td {
+    border-bottom: 1px solid;
   }
 
 </style>
