@@ -93,8 +93,4 @@
     white-space: normal;
   }
 
-  td {
-    border-bottom: 1px solid;
-  }
-
 </style>
